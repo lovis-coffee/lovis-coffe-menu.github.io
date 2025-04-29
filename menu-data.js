@@ -61,14 +61,6 @@ const MenuData = (function() {
                 });
                 document.dispatchEvent(event);
                 
-                // Show success message
-                showStatus('Menu data loaded successfully!', 'success');
-            })
-            .catch(error => {
-                console.error('Error loading menu data:', error);
-                showStatus('Failed to load menu data. Please check console for details.', 'error');
-            });
-    }
     
     /**
      * Process the menu data to extract categories and flavors
