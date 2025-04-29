@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekomendasi Menu</title>
+    <title>Menu Recommendations</title>
     <link rel="stylesheet" href="styles.css">
     <!-- PapaParse for CSV parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
@@ -13,17 +13,17 @@
 <body>
     <div class="container">
         <header>
-            <h1>Rekomendasi Menu</h1>
-            <p>Temukan menu yang sesuai dengan selera dan preferensi kamu</p>
+            <h1>Menu Recommendations</h1>
+            <p>Find the perfect menu item based on your preferences</p>
         </header>
 
         <section class="form-container">
             <form id="preferences-form">
                 <div class="form-group">
-                    <label for="category">Pilih Kategori:</label>
+                    <label for="category">Select Category:</label>
                     <div class="select-wrapper">
                         <select id="category" name="category" required>
-                            <option value="" disabled selected>Pilih Kategori</option>
+                            <option value="" disabled selected>Choose a category</option>
                             <!-- Categories will be populated from CSV data -->
                         </select>
                         <i class="fa-solid fa-chevron-down"></i>
@@ -31,17 +31,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="flavor">Pilih Rasa:</label>
+                    <label for="flavor">Select Flavor:</label>
                     <div class="select-wrapper">
                         <select id="flavor" name="flavor" required disabled>
-                            <option value="" disabled selected>Pilih Rasa</option>
+                            <option value="" disabled selected>Choose a flavor</option>
                             <!-- Flavors will be populated based on selected category -->
                         </select>
                         <i class="fa-solid fa-chevron-down"></i>
                     </div>
                 </div>
 
-                <button type="submit" id="find-btn">Temukan Rekomendasi</button>
+                <button type="submit" id="find-btn">Find Recommendations</button>
             </form>
         </section>
 
@@ -50,19 +50,19 @@
         </section>
 
         <section class="results-container" id="results-container">
-            <h2>Menu Rekomedasi berdasarkan preferensi kamu</h2>
+            <h2>Recommended Items</h2>
             <div id="results-list" class="results-list">
                 <!-- Results will be displayed here -->
                 <div class="empty-state">
                     <i class="fa-solid fa-utensils empty-icon"></i>
-                    <p>Pilih rekomendasi dan rasa untuk mengetahui menu yang tersedia</p>
+                    <p>Select a category and flavor to see recommendations</p>
                 </div>
             </div>
         </section>
     </div>
 
     <footer>
-        <p>Lovis Caffe and Authentics &copy; 2025</p>
+        <p>Lovis Coffee and Authentics &copy; 2025</p>
     </footer>
 
     <script src="menu-data.js"></script>
