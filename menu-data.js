@@ -15,7 +15,7 @@ const MenuData = (function() {
      */
     function initialize() {
         // Fetch the CSV file
-        fetch('menu lovis.csv')
+        fetch('menu_lovis.csv')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Failed to load menu data: ${response.status}`);
