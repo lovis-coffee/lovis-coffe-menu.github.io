@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Recommendations</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Menu Recommendations</h1>
+            <p>Find the perfect menu item based on your preferences</p>
+        </header>
+
+        <section class="form-container">
+            <form id="preferences-form">
+                <div class="form-group">
+                    <label for="category">Select Category:</label>
+                    <div class="select-wrapper">
+                        <select id="category" name="category" required>
+                            <option value="" disabled selected>Choose a category</option>
+                            <!-- Categories will be populated from CSV data -->
+                        </select>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="flavor">Select Flavor:</label>
+                    <div class="select-wrapper">
+                        <select id="flavor" name="flavor" required disabled>
+                            <option value="" disabled selected>Choose a flavor</option>
+                            <!-- Flavors will be populated based on selected category -->
+                        </select>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                </div>
+
+                <button type="submit" id="find-btn">Find Recommendations</button>
+            </form>
+        </section>
+
+        <section class="status-message" id="status-message">
+            <!-- Status messages will appear here -->
+        </section>
+
+        <section class="results-container" id="results-container">
+            <h2>Recommended Items</h2>
+            <div id="results-list" class="results-list">
+                <!-- Results will be displayed here -->
+                <div class="empty-state">
+                    <i class="fa-solid fa-utensils empty-icon"></i>
+                    <p>Select a category and flavor to see recommendations</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Menu Recommendation App &copy; 2025</p>
+    </footer>
+
+    <script src="js/menu-data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
