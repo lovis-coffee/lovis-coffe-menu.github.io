@@ -63,6 +63,9 @@ const MenuData = (function() {
                 
                 // Show success message
                 showStatus('Menu data loaded successfully!', 'success');
+                
+                // Populate the categories dropdown
+                populateCategories();
             })
             .catch(error => {
                 console.error('Error loading menu data:', error);
@@ -94,7 +97,57 @@ const MenuData = (function() {
             flavorsByCategory[category] = flavorsInCategory;
         });
     }
-    
+
+    /**
+     * Populate the category dropdown
+     */
+    function populateCategories() {
+        const categorySelect = document.getElementById('category');
+        categorySelect.innerHTML = ''; // Clear current options
+        categories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category;
+            option.textContent = category;
+            categorySelect.appendChild(option);
+        });
+
+        // Enable the category dropdown
+        categorySelect.disabled = false;
+
+        // Add event listener for category change
+        categorySelect.addEventListener('change', function(event) {
+            const selectedCategory = event.target.value;
+            if (selectedCategory) {
+                populateFlavors(selectedCategory);
+            }
+        });
+    }
+
+    /**
+     * Populate the flavor dropdown based on selected category
+     */
+    function populateFlavors(category) {
+        const flavorSelect = document.getElementById('flavor');
+        flavorSelect.innerHTML = ''; // Clear current options
+
+        // Add the default "Choose a flavor" option
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Choose a flavor';
+        flavorSelect.appendChild(defaultOption);
+
+        const flavors = getFlavorsForCategory(category);
+        flavors.forEach(flavor => {
+            const option = document.createElement('option');
+            option.value = flavor;
+            option.textContent = flavor;
+            flavorSelect.appendChild(option);
+        });
+
+        // Enable the flavor dropdown
+        flavorSelect.disabled = false;
+    }
+
     /**
      * Filter menu items based on category and flavor
      * @param {string} category - The selected category
