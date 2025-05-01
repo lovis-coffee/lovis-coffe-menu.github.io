@@ -6,7 +6,7 @@ const MenuData = (function() {
     let menuData = [];
     let categories = [];
     let flavorsByCategory = {};
-    
+
     function initialize() {
         fetch('menulovis.csv')
             .then(response => {
@@ -37,6 +37,11 @@ const MenuData = (function() {
                             value = parseFloat(value); // Convert to number
                         }
 
+                        // Fallback for Photo in case URL is missing or invalid
+                        if (cleanKey === 'Photo' && (!value || !isValidUrl(value))) {
+                            value = 'default-image.jpg'; // Provide default image if invalid
+                        }
+
                         cleanedItem[cleanKey] = value;
                     });
                     return cleanedItem;
@@ -63,6 +68,11 @@ const MenuData = (function() {
                 console.error('Error loading menu data:', error);
                 showStatus('Failed to load menu data. Please check console for details.', 'error');
             });
+    }
+
+    function isValidUrl(url) {
+        // Simple check to ensure the URL is a valid image URL (for illustration purposes)
+        return /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif))$/i.test(url);
     }
 
     function processMenuData() {
