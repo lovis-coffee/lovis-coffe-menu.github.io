@@ -223,7 +223,7 @@ button:focus {
 /* Image adjustments for .menu-item */
 .menu-item img {
     width: 75%;
-    height: 75%;  /* Fixed height for the image */
+    height: auto;  /* Fixed height for the image */
     object-fit: cover;  /* Ensures image covers the space and crops if needed */
     border-radius: var(--border-radius);  /* Rounded corners */
     margin-bottom: 1rem;
