@@ -124,16 +124,19 @@ button:focus {
     padding: 1.5rem;
     background-color: var(--bg-color);
     transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
-    display: flex;
-    flex-direction: column; /* Menata konten menu secara vertikal */
-    align-items: center;  /* Menjaga gambar dan teks sejajar di tengah */
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+    background-color: #f1f1f1;
 }
 
 .menu-item img {
-    width: 100%;  /* Gambar mengisi lebar kontainer */
-    height: 10px;  /* Tentukan tinggi tetap untuk gambar */
-    object-fit: cover; /* Menjaga gambar tetap proporsional dan mengisi seluruh area */
-    border-radius: var(--border-radius); /* Sudut gambar melengkung */
+    width: 100%;  /* Gambar akan mengikuti lebar kontainer */
+    height: auto; /* Menjaga proporsi gambar */
+    border-radius: var(--border-radius); /* Jika ingin sudut gambar melengkung */
+    object-fit: cover; /* Menjaga gambar tetap proporsional */
     margin-bottom: 1rem; /* Ruang antara gambar dan teks */
 }
 
