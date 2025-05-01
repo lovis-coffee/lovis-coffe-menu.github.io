@@ -59,6 +59,7 @@ header p {
     box-shadow: var(--shadow);
     padding: 2rem;
     margin-bottom: 2rem;
+    transition: padding 0.3s ease-in-out;
 }
 
 .form-group {
@@ -70,6 +71,43 @@ label {
     margin-bottom: 0.5rem;
     font-weight: 600;
     color: var(--text-color);
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    pointer-events: none;
+}
+
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    appearance: none;
+    background-color: var(--card-bg);
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+}
+
+select:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 /* Button Styles */
@@ -95,6 +133,30 @@ button:focus {
     box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.3);
 }
 
+/* Status message */
+.status-message {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    display: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.status-message.success {
+    display: block;
+    background-color: #d4edda;
+    color: var(--success-color);
+    border: 1px solid #c3e6cb;
+}
+
+.status-message.error {
+    display: block;
+    background-color: #f8d7da;
+    color: var(--error-color);
+    border: 1px solid #f5c6cb;
+}
+
 /* Results container */
 .results-container {
     background-color: var(--card-bg);
@@ -102,6 +164,7 @@ button:focus {
     box-shadow: var(--shadow);
     padding: 2rem;
     margin-bottom: 2rem;
+    transition: padding 0.3s ease-in-out;
 }
 
 .results-container h2 {
@@ -110,14 +173,13 @@ button:focus {
     text-align: center;
 }
 
-/* Grid layout for results */
 .results-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
+    transition: grid-template-columns 0.3s ease-in-out;
 }
 
-/* Menu item styles */
 .menu-item {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
@@ -130,14 +192,6 @@ button:focus {
     transform: translateY(-5px);
     box-shadow: var(--shadow);
     background-color: #f1f1f1;
-}
-
-.menu-item img {
-    width: 100%;  /* Gambar akan mengikuti lebar kontainer */
-    height: auto; /* Menjaga proporsi gambar */
-    border-radius: var(--border-radius); /* Jika ingin sudut gambar melengkung */
-    object-fit: cover; /* Menjaga gambar tetap proporsional */
-    margin-bottom: 1rem; /* Ruang antara gambar dan teks */
 }
 
 .menu-item h3 {
@@ -173,12 +227,28 @@ button:focus {
     color: #6c757d;
 }
 
+.empty-state .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #adb5bd;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+}
+
 /* No results */
 .no-results {
     text-align: center;
     padding: 2rem;
     grid-column: 1 / -1;
     color: #6c757d;
+}
+
+.no-results i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #adb5bd;
 }
 
 /* Footer */
