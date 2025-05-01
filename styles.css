@@ -220,12 +220,12 @@ button:focus {
     font-size: 1rem;
 }
 
-/* Image adjustments */
+/* Image adjustments for .menu-item */
 .menu-item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: var(--border-radius);
+    width: 75%;
+    height: 75%;  /* Fixed height for the image */
+    object-fit: cover;  /* Ensures image covers the space and crops if needed */
+    border-radius: var(--border-radius);  /* Rounded corners */
     margin-bottom: 1rem;
 }
 
@@ -290,7 +290,7 @@ footer {
     }
 
     .menu-item img {
-        height: 150px;
+        height: 150px; /* Adjust height on medium screens */
     }
 }
 
@@ -308,6 +308,6 @@ footer {
     }
 
     .menu-item img {
-        height: 120px;
+        height: 120px; /* Adjust height on small screens */
     }
 }
