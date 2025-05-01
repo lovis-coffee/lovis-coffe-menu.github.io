@@ -173,6 +173,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="flavor">${item.Flavor}</span>
                 </div>
                 <p>${item.Description}</p>
+                <p class="price">${item.Price ? 'Rp ' + item.Price.toLocaleString() : 'Price not available'}</p>
+                <img src="${item.Photo || 'default-image.jpg'}" alt="${item.Name}" class="menu-item-image">
             `;
             
             resultsList.appendChild(itemElement);
