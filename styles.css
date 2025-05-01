@@ -6,16 +6,16 @@
 }
 
 :root {
-    --primary-color: #4a6fa5;
-    --secondary-color: #166088;
-    --accent-color: #4fc3a1;
-    --text-color: #333;
-    --light-text: #f8f9fa;
-    --bg-color: #f8f9fa;
-    --card-bg: #ffffff;
-    --border-color: #dee2e6;
-    --error-color: #dc3545;
-    --success-color: #28a745;
+    --primary-color: #6f4e37;       /* Coffee brown */
+    --secondary-color: #a1866f;     /* Light mocha */
+    --accent-color: #c3a384;        /* Caramel highlight */
+    --text-color: #3e3e3e;          /* Dark neutral for readability */
+    --light-text: #f5f3f0;          /* Soft cream for light text */
+    --bg-color: #fcf7f1;            /* Warm cream background */
+    --card-bg: #fffaf5;             /* Light coffee card background */
+    --border-color: #d9cfc3;        /* Subtle border */
+    --error-color: #b23b3b;         /* Deeper red for alerts */
+    --success-color: #6d9773;       /* Natural green for success */
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --border-radius: 6px;
 }
