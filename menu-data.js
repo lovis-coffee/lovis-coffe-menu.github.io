@@ -3,68 +3,60 @@
  * Handles data processing, storage, and filtering
  */
 const MenuData = (function() {
-    // Store the parsed menu data
     let menuData = [];
-    
-    // Store unique categories and flavors
     let categories = [];
     let flavorsByCategory = {};
     
-    /**
-     * Initialize with data from the CSV file
-     */
     function initialize() {
-        // Fetch the CSV file
         fetch('menulovis.csv')
             .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to load menu data: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`Failed to load menu data: ${response.status}`);
                 return response.text();
             })
             .then(csvText => {
-                // Parse the CSV text with PapaParse
                 const parsedData = Papa.parse(csvText, {
                     header: true,
                     skipEmptyLines: true,
-                    delimiter: ';',  // Using semicolon as the delimiter
+                    delimiter: ';',
                 });
-                
-                if (parsedData.errors && parsedData.errors.length > 0) {
+
+                if (parsedData.errors?.length) {
                     console.error("CSV parsing errors:", parsedData.errors);
                     showStatus("Error parsing menu data. See console for details.", "error");
                     return;
                 }
-                
-                // Clean the data by trimming whitespace
+
                 menuData = parsedData.data.map(item => {
                     const cleanedItem = {};
                     Object.keys(item).forEach(key => {
                         const cleanKey = key.trim();
-                        cleanedItem[cleanKey] = typeof item[key] === 'string' ? item[key].trim() : item[key];
+                        let value = item[key];
+                        if (typeof value === 'string') value = value.trim();
+
+                        if (cleanKey === 'Price') {
+                            value = parseFloat(value); // Convert to number
+                        }
+
+                        cleanedItem[cleanKey] = value;
                     });
                     return cleanedItem;
                 });
-                
-                // Remove any empty entries
-                menuData = menuData.filter(item => item.Name && item.Category && item.Flavor);
-                
-                // Process data to extract categories and flavors
+
+                // Filter to ensure essential fields exist
+                menuData = menuData.filter(item =>
+                    item.Name && item.Category && item.Flavor && item.Photo && !isNaN(item.Price)
+                );
+
                 processMenuData();
-                
-                // Trigger load event
-                const event = new CustomEvent('menu-data-loaded', { 
-                    detail: { 
-                        categories: categories,
-                        flavorsByCategory: flavorsByCategory
-                    } 
+
+                const event = new CustomEvent('menu-data-loaded', {
+                    detail: {
+                        categories,
+                        flavorsByCategory
+                    }
                 });
                 document.dispatchEvent(event);
-                
-                // Show success message
                 showStatus('Menu data loaded successfully!', 'success');
-                
-                // Populate the categories dropdown
                 populateCategories();
             })
             .catch(error => {
@@ -72,25 +64,15 @@ const MenuData = (function() {
                 showStatus('Failed to load menu data. Please check console for details.', 'error');
             });
     }
-    
-    /**
-     * Process the menu data to extract categories and flavors
-     */
+
     function processMenuData() {
-        // Extract unique categories
         categories = [...new Set(menuData.map(item => item.Category.trim()))];
-        
-        // Add "All Categories" option
         categories.unshift("All Categories");
-        
-        // Generate flavor options for each category
+
         flavorsByCategory = {};
-        
-        // Get all unique flavors across all categories for the "All Categories" option
         const allFlavors = [...new Set(menuData.map(item => item.Flavor.trim()))];
         flavorsByCategory["All Categories"] = allFlavors;
-        
-        // Get flavors for each specific category
+
         categories.slice(1).forEach(category => {
             const itemsInCategory = menuData.filter(item => item.Category.trim() === category);
             const flavorsInCategory = [...new Set(itemsInCategory.map(item => item.Flavor.trim()))];
@@ -98,23 +80,17 @@ const MenuData = (function() {
         });
     }
 
-    /**
-     * Populate the category dropdown
-     */
     function populateCategories() {
         const categorySelect = document.getElementById('category');
-        categorySelect.innerHTML = ''; // Clear current options
+        categorySelect.innerHTML = '';
         categories.forEach(category => {
             const option = document.createElement('option');
             option.value = category;
             option.textContent = category;
             categorySelect.appendChild(option);
         });
-
-        // Enable the category dropdown
         categorySelect.disabled = false;
 
-        // Add event listener for category change
         categorySelect.addEventListener('change', function(event) {
             const selectedCategory = event.target.value;
             if (selectedCategory) {
@@ -123,14 +99,9 @@ const MenuData = (function() {
         });
     }
 
-    /**
-     * Populate the flavor dropdown based on selected category
-     */
     function populateFlavors(category) {
         const flavorSelect = document.getElementById('flavor');
-        flavorSelect.innerHTML = ''; // Clear current options
-
-        // Add the default "Choose a flavor" option
+        flavorSelect.innerHTML = '';
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
         defaultOption.textContent = 'Choose a flavor';
@@ -143,65 +114,35 @@ const MenuData = (function() {
             option.textContent = flavor;
             flavorSelect.appendChild(option);
         });
-
-        // Enable the flavor dropdown
         flavorSelect.disabled = false;
     }
 
-    /**
-     * Filter menu items based on category and flavor
-     * @param {string} category - The selected category
-     * @param {string} flavor - The selected flavor
-     * @returns {Array} - Filtered menu items
-     */
     function filterMenuItems(category, flavor) {
-        if (!category && !flavor) {
-            return menuData;
-        }
-        
-        // If "All Categories" is selected, filter only by flavor
+        if (!category && !flavor) return menuData;
+
         if (category === "All Categories") {
-            return menuData.filter(item => 
-                item.Flavor.trim() === flavor
-            );
+            return menuData.filter(item => item.Flavor.trim() === flavor);
         }
-        
-        // Filter by both category and flavor
-        return menuData.filter(item => 
-            item.Category.trim() === category && 
+
+        return menuData.filter(item =>
+            item.Category.trim() === category &&
             item.Flavor.trim() === flavor
         );
     }
-    
-    /**
-     * Get available categories
-     * @returns {Array} - List of categories
-     */
+
     function getCategories() {
         return categories;
     }
-    
-    /**
-     * Get flavors for a specific category
-     * @param {string} category - The category to get flavors for
-     * @returns {Array} - List of flavors for the category
-     */
+
     function getFlavorsForCategory(category) {
         return flavorsByCategory[category] || [];
     }
-    
-    /**
-     * Show status message
-     * @param {string} message - The message to display
-     * @param {string} type - The type of message (success or error)
-     */
+
     function showStatus(message, type) {
         const statusElement = document.getElementById('status-message');
         if (statusElement) {
             statusElement.textContent = message;
             statusElement.className = `status-message ${type}`;
-            
-            // Hide success messages after 5 seconds
             if (type === 'success') {
                 setTimeout(() => {
                     statusElement.style.display = 'none';
@@ -209,11 +150,9 @@ const MenuData = (function() {
             }
         }
     }
-    
-    // Initialize when DOM is loaded
+
     document.addEventListener('DOMContentLoaded', initialize);
-    
-    // Public API
+
     return {
         filterMenuItems,
         getCategories,
