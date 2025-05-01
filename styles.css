@@ -180,6 +180,7 @@ button:focus {
     transition: grid-template-columns 0.3s ease-in-out;
 }
 
+/* Menu item styles */
 .menu-item {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
@@ -217,6 +218,15 @@ button:focus {
 .menu-item p {
     color: var(--text-color);
     font-size: 1rem;
+}
+
+/* Image adjustments */
+.menu-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
 }
 
 /* Empty state */
@@ -278,6 +288,10 @@ footer {
     .results-list {
         grid-template-columns: 1fr;
     }
+
+    .menu-item img {
+        height: 150px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -291,5 +305,9 @@ footer {
 
     button {
         padding: 10px 16px;
+    }
+
+    .menu-item img {
+        height: 120px;
     }
 }
